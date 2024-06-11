@@ -9,93 +9,73 @@
     <script src="https://cdn.jsdelivr.net/npm/boosted@5.3.3/dist/js/boosted.bundle.min.js"
         integrity="sha384-3RoJImQ+Yz4jAyP6xW29kJhqJOE3rdjuu9wkNycjCuDnGAtC/crm79mLcwj1w2o/"
         crossorigin="anonymous"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.querySelector('.eye');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        function loginUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const storedUser = JSON.parse(localStorage.getItem(email));
+
+            if (storedUser && password === storedUser.password) {
+                sessionStorage.setItem('userId', storedUser.id);
+                sessionStorage.setItem('userName', storedUser.fullName);
+                alert('Login successful!');
+            } else {
+                alert('Invalid email or password.');
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="d-md-flex flex-md-equal h-100 ">
-        <div class="col-lg-4 p-0 auth-slider my-div">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block h-100 my-div" src="https://datascience.orangecodingacademy.com/assets/img/1.jpg" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img id="" class="d-block h-100 my-div" src="https://datascience.orangecodingacademy.com/assets/img/2.jpg" alt="Second slide">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8 px-0">
-            <header role="banner">
-                <nav role="navigation" id="mainNav" class="navbar navbar-light bg-white navbar-expand-md pt-2 border-bottom pb-0 mb-2 pt-1" aria-label="Main navigation">
-                <div class="container-fluid">
-                    <a href="/">
-                        <img id="imgw" src="https://datascience.orangecodingacademy.com/assets/boosted/dist/img/white.png" class="d-inline-block align-bottom mr-3" alt="Back to homepage" title="Back to homepage" height="70" loading="lazy">
-                    </a>
-                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#orange-navbar-collapse" aria-controls="orange-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse justify-content-end collapse" id="orange-navbar-collapse">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="/help" target="_blank">Help </a></li>
-                        <li class="nav-item"><a class="nav-link" href="/terms" target="_blank"> Terms &amp; Conditions</a></li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        
-                                        </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<section class="wizard-section mt-5">
+    <section class="wizard-section mt-5">
         <div class="form-wizard">
-            <form method="POST" action="https://datascience.orangecodingacademy.com/login">
-                <input type="hidden" name="_token" value="lPx0mld7QSKcBPxVWXTYUx3Mk9zi3ZLPQDWRA2yy">                <div class="d-flex align-items-center flex-column">
+            <form onsubmit="loginUser(); return false;">
+                <div class="d-flex align-items-center flex-column">
                     <div class="form-group col-lg-6 col-md-7 mb-4">
                         <h1>Sign in</h1>
                     </div>
-                    <div class="mb-4 form-group col-lg-6 col-md-7 ">
-                        <label for="validationServer01" class="is-required">Email address<span class="sr-only"> (required)</span></label>
-                        <div class="input-group ">
-                            <input name="email" type="text" class="form-control email  " id="email" value="">
-                                                    </div>
+                    <div class="mb-4 form-group col-lg-6 col-md-7">
+                        <label for="email" class="is-required">Email address<span class="sr-only"> (required)</span></label>
+                        <div class="input-group">
+                            <input name="email" type="text" class="form-control email" id="email" value="">
+                        </div>
                         <small>eg: username@domain.com </small>
                     </div>
-                    <div class="mb-4 form-group col-lg-6 col-md-7 ">
-                        <label for="validationServer02" class="is-required">Password<span class="sr-only"> (required)</span></label>
-                        <div class="input-group ">
-                            <input name="password" type="password" class="form-control password col-11 pr-0  " id="password" value="">
-                            <div class="d-flex align-items-center " onclick="showPass()">
+                    <div class="mb-4 form-group col-lg-6 col-md-7">
+                        <label for="password" class="is-required">Password<span class="sr-only"> (required)</span></label>
+                        <div class="input-group">
+                            <input name="password" type="password" class="form-control password col-11 pr-0" id="password" value="">
+                            <div class="d-flex align-items-center" onclick="togglePasswordVisibility()">
                                 <i class="fa fa-eye-slash eye btn btn-light border-left-0" aria-hidden="true"></i>
                             </div>
-                                                    </div>
-                    </div>
-                    <div class="form-group col-lg-6 col-md-7 mb-4">
-                        <div class=" d-flex justify-content-start">
-                            <div>
-                            <a class="forget-credentials" href="#">Forgot your password?</a>
-                                                            </div>
                         </div>
                     </div>
                     <div class="form-group col-lg-6 col-md-7 mb-4">
-                        <button class="btn btn-primary  btn-lg btn-block" type="submit"> Login</button>
+                        <div class="d-flex justify-content-start">
+                            <div>
+                                <a class="forget-credentials" href="#">Forgot your password?</a>
+                            </div>
+                        </div>
                     </div>
-
-
-
-
-
-
-
+                    <div class="form-group col-lg-6 col-md-7 mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit"> Login</button>
+                    </div>
                 </div>
             </form>
         </div>
-    </section> 
-</div>
-</div>
+    </section>
 </body>
 </html>
