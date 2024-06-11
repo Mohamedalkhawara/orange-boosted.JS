@@ -1,44 +1,88 @@
-<html lang="en" class="js-focus-visible" data-js-focus-visible=""><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>    Register
-</title>
-    <link rel="preload" href="https://datascience.orangecodingacademy.com/assets/boosted/dist/fonts/HelvNeue55_W1G.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://datascience.orangecodingacademy.com/assets/boosted/dist/fonts/HelvNeue75_W1G.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link href="https://datascience.orangecodingacademy.com/assets/boosted/dist/css/orangeHelvetica.min.css" rel="stylesheet">
-    <link href="https://datascience.orangecodingacademy.com/assets/boosted/dist/css/orangeIcons.min.css" rel="stylesheet">
-    <link href="https://datascience.orangecodingacademy.com/assets/boosted/dist/css/boosted.min.css" rel="stylesheet">
-    <link href="https://datascience.orangecodingacademy.com/assets/css/client.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/boosted@5.3.3/dist/js/boosted.bundle.min.js" integrity="sha384-3RoJImQ+Yz4jAyP6xW29kJhqJOE3rdjuu9wkNycjCuDnGAtC/crm79mLcwj1w2o/" crossorigin="anonymous"></script>
-    <style>
-            @media (max-width: 1000px) {
-        .hide{
-            display: none;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/boosted@5.3.3/dist/css/boosted.min.css" rel="stylesheet"
+        integrity="sha384-laZ3JUZ5Ln2YqhfBvadDpNyBo7w5qmWaRnnXuRwNhJeTEFuSdGbzl4ZGHAEnTozR" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/boosted@5.3.3/dist/js/boosted.bundle.min.js"
+        integrity="sha384-3RoJImQ+Yz4jAyP6xW29kJhqJOE3rdjuu9wkNycjCuDnGAtC/crm79mLcwj1w2o/"
+        crossorigin="anonymous"></script>
+    <script>
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
         }
-        
-    }
-    .error {
-            color: red;
-            font-size: 0.9em;
+
+        function validatePassword(password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return regex.test(password);
         }
-    </style>
+
+        function enableSubmitButton() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const acceptTerms = document.getElementById('acceptTerms').checked;
+
+            const emailValid = validateEmail(email);
+            const passwordValid = validatePassword(password);
+            const passwordsMatch = password === confirmPassword;
+
+            document.getElementById('registerSubmit').disabled = !(fullName && emailValid && passwordValid && passwordsMatch && phoneNumber && acceptTerms);
+        }
+
+        function registerUser() {
+            console.log("Register button clicked");  
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            if (fullName && email && password && phoneNumber) {
+                const userId = Date.now();
+                const user = { id: userId, fullName, email, password, phoneNumber };
+
+                localStorage.setItem(email, JSON.stringify(user));
+                alert('User registered successfully! Data saved in Local Storage.');
+            } else {
+                alert('Please fill all the required fields.');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('registerPassword');
+            const eyeIcon = document.querySelector('.eye');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="d-md-flex  h-100 ">
-        <div class="col-lg-4 p-0 hide ">
+    <div class="d-md-flex flex-md-equal h-100">
+        <div class="col-lg-4 p-0 auth-slider my-div">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item">
-                        <img class="d-block h-100 my-div" src="2.jpg" alt="First slide">
-                    </div>
                     <div class="carousel-item active">
-                        <img id="" class="d-block h-100 my-div" src="2.jpg" alt="Second slide">
+                        <img class="d-block h-100 my-div" src="https://datascience.orangecodingacademy.com/assets/img/1.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img id="" class="d-block h-100 my-div" src="https://datascience.orangecodingacademy.com/assets/img/2.jpg" alt="Second slide">
                     </div>
                 </div>
             </div>
@@ -48,7 +92,7 @@
                 <nav role="navigation" id="mainNav" class="navbar navbar-light bg-white navbar-expand-md pt-2 border-bottom pb-0 mb-2 pt-1" aria-label="Main navigation">
                 <div class="container-fluid">
                     <a href="/">
-                        <img id="imgw" src="white.png" class="d-inline-block align-bottom mr-3" alt="Back to homepage" title="Back to homepage" height="70" loading="lazy">
+                        <img id="imgw" src="https://datascience.orangecodingacademy.com/assets/boosted/dist/img/white.png" class="d-inline-block align-bottom mr-3" alt="Back to homepage" title="Back to homepage" height="70" loading="lazy">
                     </a>
                     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#orange-navbar-collapse" aria-controls="orange-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -58,146 +102,67 @@
                         <li class="nav-item"><a class="nav-link" href="/help" target="_blank">Help </a></li>
                         <li class="nav-item"><a class="nav-link" href="/terms" target="_blank"> Terms &amp; Conditions</a></li>
                     </ul>
-                    <ul class="navbar-nav">
-                        
-                                        </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-     <section class=" mt-4">
-        <div >
-            <form method="post"  action="" onsubmit="validateForm(event)">
-                <input type="hidden" name="_token" value="">    
-                 <div class="d-flex align-items-center flex-column">
-                    <div class="col-lg-6 col-md-7">
-                        <h1>Create an account</h1>
-                    </div>
-                    <div class="mb-4  col-lg-6 col-md-7 ">
-                        <label for="email" class="is-required">Email address<span class="sr-only"> (required)</span></label>
-                        <div >
-                            <input name="email" type="text" class="form-control email  " id="email" value="">
-                        </div>
-                        <small>eg: username@domain.com </small>'
-                        <div id="errorEmail" class="error"></div>
-                    </div>
-                    <div class="mb-4 form-group col-lg-6 col-md-7 ">
-                        <label for="mobile" class="is-required">Mobile<span class="sr-only"> (required)</span></label>
-                        <div class="input-group ">
-                            <input name="mobile" type="text" class="form-control mobile  " id="mobile" value="">
-                        </div>
-                        <small>eg: 077********</small>
-                        
-                        <div id="errorNum" class="error"></div>
-                    </div>
-                    <div class="mb-1 form-group col-lg-6 col-md-7" style="position: relative;">
-                        <label for="validationServer02" class="is-required">Create Password<span class="sr-only"> (required)</span></label>
-                        <div class="input-group ">
-                            <input name="password" type="password" class="form-control password col-11 pr-0  " id="password" value="">
-                            <div class="d-flex align-items-center " onclick="showPass()">
-                                <i class="fa fa-eye-slash eye btn btn-light border-left-0" aria-hidden="true"></i>
+            </nav>
+            </header>
+            <section class="wizard-section mt-5">
+                <div class="form-wizard">
+                    <form onsubmit="registerUser(); return false;">
+                        <div class="d-flex align-items-center flex-column">
+                            <div class="form-group col-lg-6 col-md-7 mb-4">
+                                <h1>Sign Up</h1>
+                            </div>
+                            <div class="mb-4 form-group col-lg-6 col-md-7">
+                                <label for="fullName" class="is-required">Full Name<span class="sr-only"> (required)</span></label>
+                                <div class="input-group">
+                                    <input name="fullName" type="text" class="form-control" id="fullName" oninput="enableSubmitButton()">
+                                </div>
+                            </div>
+                            <div class="mb-4 form-group col-lg-6 col-md-7">
+                                <label for="registerEmail" class="is-required">Email Address<span class="sr-only"> (required)</span></label>
+                                <div class="input-group">
+                                    <input name="email" type="text" class="form-control" id="registerEmail" oninput="enableSubmitButton()">
+                                </div>
+                                <small>eg: username@domain.com </small>
+                            </div>
+                            <div class="mb-4 form-group col-lg-6 col-md-7">
+                                <label for="registerPassword" class="is-required">Password<span class="sr-only"> (required)</span></label>
+                                <div class="input-group">
+                                    <input name="password" type="password" class="form-control" id="registerPassword" oninput="enableSubmitButton()">
+                                </div>
+                            </div>
+                            <div class="mb-4 form-group col-lg-6 col-md-7">
+                                <label for="confirmPassword" class="is-required">Confirm Password<span class="sr-only"> (required)</span></label>
+                                <div class="input-group">
+                                    <input name="confirmPassword" type="password" class="form-control" id="confirmPassword" oninput="enableSubmitButton()">
+                                </div>
+                            </div>
+                            <div class="mb-4 form-group col-lg-6 col-md-7">
+                                <label for="phoneNumber" class="is-required">Phone Number<span class="sr-only"> (required)</span></label>
+                                <div class="input-group">
+                                    <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" oninput="enableSubmitButton()">
+                                </div>
+                            </div>
+                            <div class="mb-4 form-group col-lg-6 col-md-7">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="acceptTerms" onchange="enableSubmitButton()">
+                                    <label class="form-check-label" for="acceptTerms">I accept the terms and conditions</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6 col-md-7 mb-4">
+                                <button class="btn btn-primary btn-lg btn-block" type="submit" id="registerSubmit" disabled>Register</button>
                             </div>
                         </div>
-                        <small>The Password should be between 6-18 characters. </small>
-                      <div id="error" class="error"></div>
-                    </div>
-                    <div class="form-group col-lg-6 col-md-7 mt-4">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input " id="chAgree" name="chAgree" type="checkbox">
-                            <label class="custom-control-label " for="chAgree">I agree to the <a href="/terms" target="_blank">terms &amp;
-                                    conditions</a> Orange. <span class="mandatory-txt">*</span></label>
-                                                    </div>
-                    </div>
-                    <div class="mb-4 form-group col-lg-6 col-md-7 ">
-                        <div class="form-group custom-control custom-checkbox col-sm-12 ">
-                            <input name="is_newsletter" type="checkbox" class="custom-control-input" id="is_newsletter" checked="">
-                            <label class="custom-control-label" for="is_newsletter">Receive Coding Academy
-                                Newsletter. </label>
-                        </div>
-                    </div>
-                    <div class="mb-4 form-group col-lg-6 col-md-7">
-                        <button class=" btn btn-primary  btn-lg btn-block" type="submit">Sign Up</button>
+                    </form>
                 </div>
-
-                    <div class="mb-4 form-group col-lg-6 col-md-7">
-                        <a href="login.html" style="text-decoration: none"> <input type="button" class="btn btn-secondary  btn-lg btn-block" value="Already have an account?login">
-                    </a></div><a href="" style="text-decoration: none">
-                </a></div><a href="" style="text-decoration: none">
+                
+                <div style="margin-left: 20rem;" class="mb-4 form-group col-lg-6 col-md-7">
+                    <a href="login.html" style="text-decoration: none"> <input type="button" class="btn btn-secondary  btn-lg btn-block" value="Already have an account? Login">
+                </a></div>
+            </section>
             
-        </a></form></div><a href="" style="text-decoration: none">
-    </a></section><a href="" style="text-decoration: none"> 
-              
-</a></div><a href="" style="text-decoration: none">
-</a></div><a href="" style="text-decoration: none">
-
-   
-
-
-   
-
-
-</a>
-<script>
-function validateEmail(e){
-        event.preventDefault();
-        var email =document.getElementById("email").value;
-    var errorDiv=document.getElementById("errorEmail");
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(regex.test(email)){
-        localStorage.setItem("savedEmail", email);
-        errorDiv.textContent = "Email address is valid";
-                errorDiv.style.color = "green";
-    } else {
-        errorDiv.textContent = "Please enter a valid email address.";
-                errorDiv.style.color = "red";
-    }
-  
-    }
-
-function validateMobileNum(e){
-        event.preventDefault();
-        var mobileNum =document.getElementById("mobile").value;
-    var errorDiv=document.getElementById("errorNum");
-    const regex = /^077\d{7}$/;
-    if(regex.test(mobileNum)){
-        localStorage.setItem("savedMobile", mobileNum);
-        errorDiv.textContent = "Mobile number is valid";
-                errorDiv.style.color = "green";
-    } else {
-        errorDiv.textContent = "Mobile number must start with 077 and be 10 digits long.";
-                errorDiv.style.color = "red";
-    }
-  
-    }
-
-
-
-
-    function validatePassword (e){
-        event.preventDefault();
-        var password =document.getElementById("password").value;
-    var errorDiv=document.getElementById("error");
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    
-    if(regex.test(password)){
-        localStorage.setItem("password", password);
-        errorDiv.textContent = "Password is valid";
-                errorDiv.style.color = "green";
-    } else {
-        errorDiv.textContent = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
-                errorDiv.style.color = "red";
-    }
-  
-    }
-    function validateForm(e){
-        validatePassword(e);
-        validateMobileNum(e);
-        validateEmail(e);
-        
-    }
-    
-</script>
-
-
-
-</body></html>
+        </div>
+    </div>
+</body>
+</html>
